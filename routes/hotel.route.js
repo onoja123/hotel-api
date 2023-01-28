@@ -18,3 +18,6 @@ router.get("/",hotelController.getHotels);
 router.get("/countByCity", hotelController.countByCity);
 router.get("/countByType", hotelController.countByType);
 router.get("/room/:id", hotelController.getHotelRooms);
+
+
+module.exports = router;

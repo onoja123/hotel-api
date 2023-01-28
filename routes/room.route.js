@@ -19,3 +19,6 @@ router.get("/:id", roomController.getRoom);
 //GET ALL
 
 router.get("/", roomController.getRooms);
+
+
+module.exports = router;

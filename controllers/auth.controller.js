@@ -50,7 +50,7 @@ exports.signup = catchAsync(async(req, res, next)=>{
       case !username && !email && !password:
         return res.status(400).send("Please fill in the required fields");
       case !username:
-        return res.status(400).send("Please enter your fullusername");
+        return res.status(400).send("Please enter your username");
       case !email:
         return res.status(400).send("Please enter your email");
       case !password:
@@ -62,7 +62,7 @@ exports.signup = catchAsync(async(req, res, next)=>{
     if (existingusername){
       res.status(400).json({
         status: false,
-        message: "The email address is already taken"
+        message: "The username is already taken"
       })
     }
 
@@ -78,12 +78,12 @@ exports.signup = catchAsync(async(req, res, next)=>{
     const emailToken = newUser.getVerifyEmailToken()
 
     await newUser.save();
-    const URL = "https://string-cz7x.onrender.com";
-    const resetURL = `${URL}/api/auth/verify/${emailToken}`
+    // const URL = "https://string-cz7x.onrender.com";
+    // const resetURL = `${URL}/api/auth/verify/${emailToken}`
 
-    // const resetURL = `${req.protocol}://${req.get(
-    //   'host'
-    // )}/api/auth/verify/${emailToken}`;
+    const resetURL = `${req.protocol}://${req.get(
+      'host'
+    )}/api/auth/verify/${emailToken}`;
   
     const message = `
     <p>Hi ${req.body.username}, welcome to String 🚀</p>
@@ -116,8 +116,6 @@ exports.login = catchAsync(async(req, res, next)=>{
     
     const { username, password} = req.body;
   
-
-
     // 1) Check if username and password exist
      switch((username, password)){
        case !username || !password:
@@ -125,7 +123,7 @@ exports.login = catchAsync(async(req, res, next)=>{
      }
      
      // 2) Check if user exists && password is correct
-     const user = await User.findOne({ username }).select('+password');
+     const user = await User.findOne({username}).select('+password');
 
      if(user.isActive === false){
       return res.status(400).send("Please provide verify your username and try again.")
@@ -156,6 +154,7 @@ exports.resendVerification = catchAsync(async(req, res, next)=>{
   
     // const URL = "https://string-cz7x.onrender.com"
     // const resetURL = `${URL}/api/auth/verify/${verifyToken}`
+
         const resetURL = `${req.protocol}://${req.get(
       'host'
     )}/api/auth/verify/${verifyToken}`;
@@ -163,7 +162,7 @@ exports.resendVerification = catchAsync(async(req, res, next)=>{
     <p>Hi there ${user.username}!,</p>
     <p>Here's a new link to verify your account.</p>
     <a href="${resetURL}" clicktracking=off>Verify Account</a>
-    <p>String 🚀</p>
+    <p>Lat hotel 🚀</p>
 `;
 
     try{

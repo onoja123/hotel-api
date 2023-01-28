@@ -1,34 +1,33 @@
-const AppError = require("../utils/AppError");
+const AppError = require("../utils/AppError")
 
-const globalHandler = (err, req, res, next) => {
+const globalHandler = (err, req, res, next)=>{
     let error = {
         ...err
-    }
+    };
 
     error.message = err.message;
     console.log(err)
 
 
     if(err.name === "CastError"){
-        const message = `Resource not found`
+        const message = `Resource not found`;
         error = new AppError(message, 500)
     }
 
     if(err.code === 11000){
-        const message = "Duplicate field value entered";
+        const message = "   co";
         error = new AppError(message, 500)
     }
 
     if(err.code === "ValidationError"){
-        const message = Object.values(err.errors).map((val)=> val.message);
+        const message =
         error = new AppError(message, 500)
     }
 
-    return res.status(stausCode || 5000).json({
+    return res.status(err.statusCode || 500).json({
         status: false,
-        message: error.message || "status Error"
+        error: error.message || "server error"
     })
 }
-
 
 module.exports = globalHandler;
